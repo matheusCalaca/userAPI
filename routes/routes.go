@@ -1,24 +1,17 @@
 package routes
 
 import (
-	"fmt"
-	"log"
 	"net/http"
+	user "userAPI/controlles/user"
 
 	"github.com/gin-gonic/gin"
 )
-
-func testeFunc(c *gin.Context) {
-	fmt.Print("teste")
-	log.Print("LOGGER TESTER")
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": "{teste}"})
-}
 
 func StartGin() {
 	router := gin.Default()
 	api := router.Group("/api")
 	{
-		api.GET("/users", testeFunc)
+		api.GET("/users", user.ListAll)
 	}
 
 	router.NoRoute(func(c *gin.Context) {
