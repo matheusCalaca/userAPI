@@ -23,11 +23,16 @@ var (
 	errDeletionFailed  = errors.New("Erro ao Deletar usuario")
 )
 
-// var users = userModel.Users
 var dbmap = dbControllers.InitDb()
 
 func ListAllUser(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": "teste"})
+	var users userModel.Users
+	_, err := dbmap.Select(&users, "select * from user")
+	if err != nil {
+		dbControllers.CheckErr(err, "Erro ao Buscar Dados : ")
+	}
+
+	c.JSON(http.StatusOK, &users)
 }
 
 func CreateUser(c *gin.Context) {
@@ -37,8 +42,8 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": errInvalidBody.Error()})
 		return
 	}
-	userJson.CreatedAt = time.Now()
-	userJson.UpdatedAt = time.Now()
+	userJson.CreatedAt = time.Now().UnixNano()
+	userJson.UpdatedAt = time.Now().UnixNano()
 	log.Println(userJson)
 
 	insert, errInsert := dbmap.Exec(`INSERT INTO user (NOME, ENDERECO, IDADE, CREATED_AT) VALUES (?, ?, ?, ?)`, userJson.Nome, userJson.Endereco, userJson.Idade, userJson.CreatedAt)
