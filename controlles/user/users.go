@@ -1,24 +1,28 @@
 package user
 
 import (
+	"errors"
+	"log"
 	"net/http"
+	"time"
 
-	user "userAPI/models/user"
+	userModel "userAPI/models/user"
 
 	"github.com/gin-gonic/gin"
 )
 
 const UserCollection = "user"
 
-// var (
-// 	errNotExist        = errors.New("Users are not exist")
-// 	errInvalidID       = errors.New("Invalid ID")
-// 	errInvalidBody     = errors.New("Invalid request body")
-// 	errInsertionFailed = errors.New("Error in the user insertion")
-// 	errUpdationFailed  = errors.New("Error in the user updation")
-// 	errDeletionFailed  = errors.New("Error in the user deletion")
-// )
-var users = user.Users{
+var (
+	errNotExist        = errors.New("User não existe")
+	errInvalidID       = errors.New("ID Invalido")
+	errInvalidBody     = errors.New("Corpo Json Invalido")
+	errInsertionFailed = errors.New("Erro ao Inserir usuario")
+	errUpdationFailed  = errors.New("Erro ao Atualizar usuario")
+	errDeletionFailed  = errors.New("Erro ao Deletar usuario")
+)
+
+var users []userModel.User = userModel.Users{
 	{
 		Nome:     "Matheus Calaça",
 		Endereço: "Endereço matheus calaça",
@@ -36,6 +40,20 @@ var users = user.Users{
 	},
 }
 
-func ListAll(c *gin.Context) {
+func ListAllUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &users})
+}
+
+func CreateUser(c *gin.Context) {
+	var userJson userModel.User
+	err := c.Bind(&userJson)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": errInvalidBody.Error()})
+		return
+	}
+	userJson.CreatedAt = time.Now()
+	userJson.UpdatedAt = time.Now()
+	log.Printf("[ LOGGER ]", userJson)
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userJson})
 }
