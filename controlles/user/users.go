@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	dbControllers "userAPI/controlles/db"
 	userModel "userAPI/models/user"
 
 	"github.com/gin-gonic/gin"
@@ -22,26 +23,11 @@ var (
 	errDeletionFailed  = errors.New("Erro ao Deletar usuario")
 )
 
-var users []userModel.User = userModel.Users{
-	{
-		Nome:     "Matheus Calaça",
-		Endereço: "Endereço matheus calaça",
-		Idade:    23,
-	},
-	{
-		Nome:     "Ana julia calaça",
-		Endereço: "Endereço ana julia",
-		Idade:    15,
-	},
-	{
-		Nome:     "Juliana Calaça",
-		Endereço: "Endereço da Juliana",
-		Idade:    15,
-	},
-}
+// var users = userModel.Users
+var dbmap = dbControllers.InitDb()
 
 func ListAllUser(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &users})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "user": "teste"})
 }
 
 func CreateUser(c *gin.Context) {
@@ -53,7 +39,28 @@ func CreateUser(c *gin.Context) {
 	}
 	userJson.CreatedAt = time.Now()
 	userJson.UpdatedAt = time.Now()
-	log.Printf("[ LOGGER ]", userJson)
+	log.Println(userJson)
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userJson})
+	insert, errInsert := dbmap.Exec(`INSERT INTO user (NOME, ENDERECO, IDADE, CREATED_AT) VALUES (?, ?, ?, ?)`, userJson.Nome, userJson.Endereco, userJson.Idade, userJson.CreatedAt)
+	if insert != nil {
+		user_id, err := insert.LastInsertId()
+
+		if err == nil {
+			content := &userModel.User{
+				ID:        user_id,
+				Nome:      userJson.Nome,
+				Endereco:  userJson.Endereco,
+				Idade:     userJson.Idade,
+				CreatedAt: userJson.CreatedAt,
+			}
+			c.JSON(201, content)
+		} else {
+			dbControllers.CheckErr(err, "Falha ao inserir")
+		}
+	}
+	if errInsert != nil {
+		dbControllers.CheckErr(errInsert, "Error ao inserir USER")
+	}
+
+	// c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userJson})
 }
