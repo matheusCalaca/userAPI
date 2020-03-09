@@ -1,4 +1,4 @@
-criando a tabela usuario
+-- criando a tabela usuario
 CREATE TABLE `user` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `NOME` VARCHAR(255) NULL,

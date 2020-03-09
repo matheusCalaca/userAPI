@@ -2,12 +2,11 @@ package user
 
 import (
 	"errors"
-	"log"
 	"net/http"
-	"time"
 
 	dbControllers "userAPI/controlles/db"
 	userModel "userAPI/models/user"
+	userNegocio "userAPI/services/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,30 +41,8 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": errInvalidBody.Error()})
 		return
 	}
-	userJson.CreatedAt = time.Now().UnixNano()
-	userJson.UpdatedAt = time.Now().UnixNano()
-	log.Println(userJson)
 
-	insert, errInsert := dbmap.Exec(`INSERT INTO user (NOME, ENDERECO, IDADE, CREATED_AT) VALUES (?, ?, ?, ?)`, userJson.Nome, userJson.Endereco, userJson.Idade, userJson.CreatedAt)
-	if insert != nil {
-		user_id, err := insert.LastInsertId()
-
-		if err == nil {
-			content := &userModel.User{
-				ID:        user_id,
-				Nome:      userJson.Nome,
-				Endereco:  userJson.Endereco,
-				Idade:     userJson.Idade,
-				CreatedAt: userJson.CreatedAt,
-			}
-			c.JSON(201, content)
-		} else {
-			dbControllers.CheckErr(err, "Falha ao inserir")
-		}
-	}
-	if errInsert != nil {
-		dbControllers.CheckErr(errInsert, "Error ao inserir USER")
-	}
+	userNegocio.InsertUser(userJson)
 
 	// c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userJson})
 }
