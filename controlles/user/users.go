@@ -42,7 +42,12 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	userNegocio.InsertUser(userJson)
+	userCreate, err := userNegocio.InsertUser(userJson)
 
-	// c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userJson})
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userCreate})
 }
