@@ -34,3 +34,14 @@ func InserirUserBD(user userModel.User) (userModel.User, error) {
 	}
 	return userModel.User{}, nil
 }
+
+func SelectAllUser() (userModel.Users, error) {
+	var users userModel.Users
+	_, err := dbmap.Select(&users, "select * from user")
+	if err != nil {
+		dbControllers.CheckErr(err, "Erro ao Buscar Dados : ")
+		return nil, errors.New("Erro ao Buscar Dados : ")
+	}
+
+	return users, nil
+}
