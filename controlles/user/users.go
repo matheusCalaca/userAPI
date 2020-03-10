@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	dbControllers "userAPI/controlles/db"
+	dbControllers "userAPI/dao/db"
 	userModel "userAPI/models/user"
 	userNegocio "userAPI/services/user"
 
