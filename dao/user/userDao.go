@@ -1,7 +1,6 @@
 package userDao
 
 import (
-	"errors"
 	dbControllers "userAPI/dao/db"
 	userModel "userAPI/models/user"
 )
@@ -24,13 +23,11 @@ func InserirUserBD(user userModel.User) (userModel.User, error) {
 			}
 			return content, nil
 		} else {
-			dbControllers.CheckErr(err, "Falha ao inserir")
-			return user, errors.New("Falha ao inserir")
+			return user, dbControllers.CheckErr(err, "Falha ao inserir")
 		}
 	}
 	if errInsert != nil {
-		dbControllers.CheckErr(errInsert, "Error ao inserir USER")
-		return user, errors.New("Error ao inserir USER")
+		return user, dbControllers.CheckErr(errInsert, "Error ao inserir USER")
 	}
 	return userModel.User{}, nil
 }
@@ -39,8 +36,7 @@ func SelectAllUser() (userModel.Users, error) {
 	var users userModel.Users
 	_, err := dbmap.Select(&users, "select * from user")
 	if err != nil {
-		dbControllers.CheckErr(err, "Erro ao Buscar Dados : ")
-		return nil, errors.New("Erro ao Buscar Dados : ")
+		return nil, dbControllers.CheckErr(err, "Erro ao Buscar Dados : ")
 	}
 
 	return users, nil

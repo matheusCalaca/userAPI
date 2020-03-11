@@ -25,10 +25,11 @@ var (
 var dbmap = dbControllers.InitDb()
 
 func ListAllUser(c *gin.Context) {
-	var users userModel.Users
-	_, err := dbmap.Select(&users, "select * from user")
+	users, err := userNegocio.FindAllUser()
+
 	if err != nil {
-		dbControllers.CheckErr(err, "Erro ao Buscar Dados : ")
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, &users)

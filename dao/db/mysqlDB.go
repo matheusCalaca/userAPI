@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"database/sql"
+	"errors"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -21,10 +22,12 @@ func InitDb() *gorp.DbMap {
 	return dbmap
 }
 
-func CheckErr(err error, msg string) {
+func CheckErr(err error, msg string) error {
 	if err != nil {
-		log.Fatalln(msg, err)
+		log.Print(msg + " (" + err.Error() + ")")
+		return errors.New(msg + " (" + err.Error() + ")")
 	}
+	return nil
 }
 
 func Cors() gin.HandlerFunc {

@@ -18,12 +18,11 @@ func InsertUser(user userModel.User) (userModel.User, error) {
 	user.UpdatedAt = time.Now().UnixNano()
 
 	userBD, err := userDao.InserirUserBD(user)
-	if err == nil {
-		return userBD, err
+	if err != nil {
+		return user, err
 	}
 
-	//todo: refatorar esta parte
-	return user, errors.New("Error no metodo")
+	return userBD, err
 }
 
 func validaInsertUser(userVariavel userModel.User) (bool, error) {
