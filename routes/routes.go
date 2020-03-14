@@ -11,8 +11,8 @@ func StartGin() {
 	router := gin.Default()
 	api := router.Group("/api")
 	{
-		api.GET("/users", user.ListAllUser)
-		api.POST("/users", user.CreateUser)
+		// api.GET("/users", user.ListAllUser)
+		api.POST("/users", user.CreatePessoa)
 	}
 
 	router.NoRoute(func(c *gin.Context) {

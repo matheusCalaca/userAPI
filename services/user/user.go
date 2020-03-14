@@ -1,37 +1,37 @@
-package userNegocio
+// package userNegocio
 
-import (
-	"errors"
-	"time"
-	userDao "userAPI/dao/user"
-	userModel "userAPI/models/user"
-)
+// import (
+// 	"errors"
+// 	"time"
+// 	userDao "userAPI/dao/user"
+// 	userModel "userAPI/models/user"
+// )
 
-func InsertUser(user userModel.User) (userModel.User, error) {
+// func InsertUser(user userModel.User) (userModel.User, error) {
 
-	_, errValidation := validaInsertUser(user)
-	if errValidation != nil {
-		return user, errValidation
-	}
+// 	_, errValidation := validaInsertUser(user)
+// 	if errValidation != nil {
+// 		return user, errValidation
+// 	}
 
-	user.CreatedAt = time.Now().UnixNano()
-	user.UpdatedAt = time.Now().UnixNano()
+// 	user.CreatedAt = time.Now().UnixNano()
+// 	user.UpdatedAt = time.Now().UnixNano()
 
-	userBD, err := userDao.InserirUserBD(user)
-	if err != nil {
-		return user, err
-	}
+// 	userBD, err := userDao.InserirUserBD(user)
+// 	if err != nil {
+// 		return user, err
+// 	}
 
-	return userBD, err
-}
+// 	return userBD, err
+// }
 
-func validaInsertUser(userVariavel userModel.User) (bool, error) {
-	if len(userVariavel.CpfCnpj) <= 0 {
-		return false, errors.New("CPF CNPJ não pode ser vazio!")
-	}
-	return true, nil
-}
+// func validaInsertUser(userVariavel userModel.User) (bool, error) {
+// 	if len(userVariavel.CpfCnpj) <= 0 {
+// 		return false, errors.New("CPF CNPJ não pode ser vazio!")
+// 	}
+// 	return true, nil
+// }
 
-func FindAllUser() (userModel.Users, error) {
-	return userDao.SelectAllUser()
-}
+// func FindAllUser() (userModel.Users, error) {
+// 	return userDao.SelectAllUser()
+// }

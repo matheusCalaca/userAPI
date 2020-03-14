@@ -5,8 +5,7 @@ import (
 	"net/http"
 
 	dbControllers "userAPI/dao/db"
-	userModel "userAPI/models/user"
-	userNegocio "userAPI/services/user"
+	models "userAPI/models/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,31 +23,31 @@ var (
 
 var dbmap = dbControllers.InitDb()
 
-func ListAllUser(c *gin.Context) {
-	users, err := userNegocio.FindAllUser()
+// func ListAllUser(c *gin.Context) {
+// 	users, err := userNegocio.FindAllUser()
 
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
-		return
-	}
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+// 		return
+// 	}
 
-	c.JSON(http.StatusOK, &users)
-}
+// 	c.JSON(http.StatusOK, &users)
+// }
 
-func CreateUser(c *gin.Context) {
-	var userJson userModel.User
-	err := c.Bind(&userJson)
+func CreatePessoa(c *gin.Context) {
+	var pessoaJson models.Pessoa
+	err := c.Bind(&pessoaJson)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": errInvalidBody.Error()})
 		return
 	}
 
-	userCreate, err := userNegocio.InsertUser(userJson)
+	// userCreate, err := userNegocio.InsertUser(userJson)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &userCreate})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &pessoaJson})
 }
