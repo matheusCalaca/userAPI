@@ -1,6 +1,6 @@
 # CRUD simples 
 
-O objetivo deste projeto e conhecer a framework GIN da linguagem golang, fazendo um CRUD simples de usuario
+O objetivo deste projeto e disponibilizar uma API de cadastro de Usuario.
 
 #Configuração        
 ###Windows
