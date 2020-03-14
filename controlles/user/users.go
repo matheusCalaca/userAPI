@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	dbControllers "userAPI/dao/db"
 	models "userAPI/models/user"
+	pessoaNegocio "userAPI/services/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,7 +21,7 @@ var (
 	errDeletionFailed  = errors.New("Erro ao Deletar usuario")
 )
 
-var dbmap = dbControllers.InitDb()
+// var dbmap = dbControllers.InitDb()
 
 // func ListAllUser(c *gin.Context) {
 // 	users, err := userNegocio.FindAllUser()
@@ -42,12 +42,12 @@ func CreatePessoa(c *gin.Context) {
 		return
 	}
 
-	// userCreate, err := userNegocio.InsertUser(userJson)
+	pessoaCreate, err := pessoaNegocio.InsertPessoa(pessoaJson)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "user": &pessoaJson})
+	c.JSON(http.StatusOK, gin.H{"status": "success", "endereco": &pessoaCreate})
 }
