@@ -12,6 +12,6 @@ type Pessoa struct {
 	Email          string     `db:"EMAIL" json:"email"`
 	Telefone       []Telefone ` json:"telefones"`
 	Endereco       []Endereco ` json:"enderecos"`
-	CreatedAt      int64      `db:"CREATED_AT" json:"created_at"`
-	UpdatedAt      int64      `db:"UPDATE_AT" json:"updated_at"`
+	CreatedAt      time.Time  `db:"CREATED_AT" json:"created_at"`
+	UpdatedAt      time.Time  `db:"UPDATE_AT" json:"updated_at"`
 }

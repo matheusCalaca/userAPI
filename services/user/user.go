@@ -1,6 +1,8 @@
 package pessoaNegocio
 
 import (
+	"time"
+	pessoaDAO "userAPI/dao/user"
 	models "userAPI/models/user"
 )
 
@@ -11,15 +13,15 @@ func InsertPessoa(pessoa models.Pessoa) (models.Pessoa, error) {
 	// 		return user, errValidation
 	// 	}
 
-	// 	user.CreatedAt = time.Now().UnixNano()
-	// 	user.UpdatedAt = time.Now().UnixNano()
+	pessoa.CreatedAt = time.Now()
+	pessoa.UpdatedAt = time.Now()
 
-	// 	userBD, err := userDao.InserirUserBD(user)
-	// 	if err != nil {
-	// 		return user, err
-	// 	}
+	pessoaDB, err := pessoaDAO.InserirPessoaBD(pessoa)
+	if err != nil {
+		return pessoa, err
+	}
 
-	return pessoa, nil
+	return pessoaDB, nil
 }
 
 // func validaInsertUser(userVariavel userModel.User) (bool, error) {
