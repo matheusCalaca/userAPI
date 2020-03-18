@@ -1,25 +1,26 @@
 package controllers
 
 import (
-	"database/sql"
 	"errors"
 	"log"
 
+	models "userAPI/models/user"
+
 	"github.com/gin-gonic/gin"
-	"github.com/go-gorp/gorp"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-// type Dbmap = InitDb()
+func InitDb() *gorm.DB {
 
-func InitDb() *gorp.DbMap {
-	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/user")
+	dc, err := gorm.Open("mysql", "root:1234@tcp(localhost:3306)/user?charset=utf8&parseTime=True&loc=Local")
 	CheckErr(err, "Falha ao iniciar SQL")
-	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
-	err = dbmap.CreateTablesIfNotExists()
-	CheckErr(err, "Falha a criar Tabelas")
 
-	return dbmap
+	dc.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4")
+	dc.AutoMigrate(&models.Telefone{})
+	dc.LogMode(true)
+	CheckErr(err, "Falha a criar Tabelas")
+	return dc
 }
 
 func CheckErr(err error, msg string) error {

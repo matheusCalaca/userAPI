@@ -1,22 +1,20 @@
 package pessoaNegocio
 
 import (
-	"time"
 	pessoaDAO "userAPI/dao/user"
 	models "userAPI/models/user"
+
+	"github.com/jinzhu/gorm"
 )
 
-func InsertPessoa(pessoa models.Pessoa) (models.Pessoa, error) {
+func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 	// 	_, errValidation := validaInsertUser(user)
 	// 	if errValidation != nil {
 	// 		return user, errValidation
 	// 	}
 
-	pessoa.CreatedAt = time.Now()
-	pessoa.UpdatedAt = time.Now()
-
-	pessoaDB, err := pessoaDAO.InserirPessoaBD(pessoa)
+	pessoaDB, err := pessoaDAO.InserirPessoaBD(pessoa, db)
 	if err != nil {
 		return pessoa, err
 	}

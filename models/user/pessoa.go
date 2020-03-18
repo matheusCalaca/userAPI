@@ -1,17 +1,24 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
 
 type Pessoa struct {
-	ID_PESSOA      int64      `db:"ID_PESSOA" json:"id"`
-	CPF            int64      `db:"CPF" json:"CPF"`
-	Nome           string     `db:"NOME" json:"nome"`
-	Sobrenome      string     `db:"SOBRENOME" json:"sobrenome"`
-	RG             string     `db:"RG" json:"RG"`
-	DataNascimento time.Time  `db:"DATA_NASCIMETO" json:"dataNascimento"`
-	Email          string     `db:"EMAIL" json:"email"`
-	Telefone       []Telefone ` json:"telefones"`
-	Endereco       []Endereco ` json:"enderecos"`
-	CreatedAt      time.Time  `db:"CREATED_AT" json:"created_at"`
-	UpdatedAt      time.Time  `db:"UPDATE_AT" json:"updated_at"`
+	gorm.Model
+	CPF            int64      `gorm:"column:CPF" json:"CPF"`
+	Nome           string     `gorm:"column:NOME" json:"nome"`
+	Sobrenome      string     `gorm:"column:SOBRENOME" json:"sobrenome"`
+	RG             string     `gorm:"column:RG" json:"RG"`
+	DataNascimento time.Time  `gorm:"column:DATA_NASCIMETO" json:"dataNascimento"`
+	Email          string     `gorm:"column:EMAIL" json:"email"`
+	// Telefone       []Telefone ` json:"telefones"`
+	// Endereco       []Endereco ` json:"enderecos"`
+}
+
+
+func (Pessoa) TableName() string {
+	return "PESSOA"
 }

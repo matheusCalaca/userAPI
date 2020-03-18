@@ -8,6 +8,7 @@ import (
 	pessoaNegocio "userAPI/services/user"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 const UserCollection = "user"
@@ -42,7 +43,9 @@ func CreatePessoa(c *gin.Context) {
 		return
 	}
 
-	pessoaCreate, err := pessoaNegocio.InsertPessoa(pessoaJson)
+	pessoaCreate, err := pessoaNegocio.InsertPessoa(pessoaJson, c.MustGet("db").(*gorm.DB))
+
+
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})

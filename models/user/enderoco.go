@@ -1,15 +1,20 @@
 package model
 
+import "github.com/jinzhu/gorm"
+
 type Endereco struct {
-	ID_ENDEREOCO int64  `db:"ID_TELEFONE" json:"id"`
-	CEP          int64  `db:"CEP" json:"CEP"`
-	Logradouro   string `db:"LOGRADOURO" json:"logradouro"`
-	Bairro       string `db:"BAIRRO" json:"bairro"`
-	Cidade       string `db:"CIDADE" json:"cidade"`
-	UF           string `db:"UF" json:"UF"`
-	Complemento  string `db:"COMPLEMENTO" json:"complemento"`
-	Numero       string `db:"NUMERO" json:"numero"`
-	Tipo         string `db:"TIPO" json:"tipo"`
-	CreatedAt    int64  `db:"CREATED_AT" json:"created_at"`
-	UpdatedAt    int64  `db:"UPDATE_AT" json:"updated_at"`
+	gorm.Model
+	CEP         int64  `gorm:"column:CEP" json:"CEP"`
+	Logradouro  string `gorm:"column:LOGRADOURO" json:"logradouro"`
+	Bairro      string `gorm:"column:BAIRRO" json:"bairro"`
+	Cidade      string `gorm:"column:CIDADE" json:"cidade"`
+	UF          string `gorm:"column:UF" json:"UF"`
+	Complemento string `gorm:"column:COMPLEMENTO" json:"complemento"`
+	Numero      string `gorm:"column:NUMERO" json:"numero"`
+	Tipo        string `gorm:"column:TIPO" json:"tipo"`
+}
+
+
+func (Endereco) TableName() string {
+	return "ENDERECO"
 }
