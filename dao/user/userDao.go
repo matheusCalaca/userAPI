@@ -1,7 +1,6 @@
 package userDao
 
 import (
-	"log"
 	"time"
 	models "userAPI/models/user"
 
@@ -19,17 +18,14 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 	// 	return pessoa, dbControllers.CheckErr(err, "Falha ao inserir")
 	// }
 	// pessoa.ID = uint(pessoaId)
-	telefone := &models.Telefone{
-		DDD:    62,
-		Numero: 62999627272,
-		Tipo:   "CELULAR",
-	}
-	telefone.CreatedAt = time.Now()
-	result := db.Create(telefone)
-	if result.Error != nil {
-		log.Fatalln(result.Error)
-	}
-
+	// telefone := &models.Telefone{
+	// 	DDD:    62,
+	// 	Numero: 62999627272,
+	// 	Tipo:   "CELULAR",
+	// }
+	pessoa.CreatedAt = time.Now()
+	db.Create(&pessoa)
+	// log.Print(result)
 	return pessoa, nil
 
 }

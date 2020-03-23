@@ -14,10 +14,9 @@ type Pessoa struct {
 	RG             string     `gorm:"column:RG" json:"RG"`
 	DataNascimento time.Time  `gorm:"column:DATA_NASCIMETO" json:"dataNascimento"`
 	Email          string     `gorm:"column:EMAIL" json:"email"`
-	// Telefone       []Telefone ` json:"telefones"`
+	Telefone       []Telefone `gorm:"foreignkey:TelefonePessoa" json:"telefones"`
 	// Endereco       []Endereco ` json:"enderecos"`
 }
-
 
 func (Pessoa) TableName() string {
 	return "PESSOA"
