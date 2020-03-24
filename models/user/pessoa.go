@@ -15,7 +15,7 @@ type Pessoa struct {
 	DataNascimento time.Time  `gorm:"column:DATA_NASCIMETO" json:"dataNascimento"`
 	Email          string     `gorm:"column:EMAIL" json:"email"`
 	Telefone       []Telefone `gorm:"foreignkey:TelefonePessoa" json:"telefones"`
-	// Endereco       []Endereco ` json:"enderecos"`
+	Endereco       []Endereco `gorm:"foreignkey:EnderecoPessoa" json:"enderecos"`
 }
 
 func (Pessoa) TableName() string {

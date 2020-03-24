@@ -1,7 +1,7 @@
 package userDao
 
 import (
-	"time"
+	"log"
 	models "userAPI/models/user"
 
 	"github.com/jinzhu/gorm"
@@ -23,9 +23,9 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 	// 	Numero: 62999627272,
 	// 	Tipo:   "CELULAR",
 	// }
-	pessoa.CreatedAt = time.Now()
-	db.Create(&pessoa)
-	// log.Print(result)
+	// pessoa.CreatedAt = time.Now()
+	result := db.Create(&pessoa)
+	log.Print(&result.Error)
 	return pessoa, nil
 
 }
