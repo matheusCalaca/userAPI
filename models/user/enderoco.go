@@ -2,6 +2,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Endereco e a strutura de objeto para endereço
 type Endereco struct {
 	gorm.Model
 	CEP            int64  `gorm:"column:CEP" json:"CEP"`
@@ -15,6 +16,7 @@ type Endereco struct {
 	EnderecoPessoa uint   `gorm:"column:ENDERECO_PESSOA"`
 }
 
+// TableName e afunção para definir o nome da tabela
 func (Endereco) TableName() string {
 	return "ENDERECO"
 }

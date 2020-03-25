@@ -3,7 +3,7 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 )
-
+// Telefone a a estrutura para o obejto telefone
 type Telefone struct {
 	gorm.Model
 	DDD            int64  `gorm:"column:DDD" json:"ddd"`
@@ -12,6 +12,7 @@ type Telefone struct {
 	TelefonePessoa uint   `gorm:"column:TELEFONE_PESSOA; foreignkey:TelefonePessoa" `
 }
 
+// TableName e afunção para definir o nome da tabela
 func (Telefone) TableName() string {
 	return "telefone"
 }
