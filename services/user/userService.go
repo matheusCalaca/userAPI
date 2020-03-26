@@ -3,6 +3,7 @@ package pessoanegocio
 import (
 	"errors"
 	"strconv"
+	"strings"
 	pessoaDAO "userAPI/dao/user"
 	models "userAPI/models/user"
 	util "userAPI/services/util"
@@ -31,6 +32,15 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 	if !util.IsCPFValido(strconv.FormatInt(pessoa.CPF, 10)) {
 		return false, errors.New("CPF Invalido ! ")
 	}
+
+	if strings.Trim(pessoa.Nome, " ") == "" {
+		return false, errors.New("Nome não pode ser vazio ! ")
+	}
+
+	if strings.Trim(pessoa.Sobrenome, " ") == "" {
+		return false, errors.New("Sobrnome não pode ser vazio ! ")
+	}
+
 	return true, nil
 }
 
