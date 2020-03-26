@@ -28,8 +28,8 @@ func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 //validaPessoa metodos com as regras de validação antes de inserir uma pessoa
 func validaPessoa(pessoa *models.Pessoa) (bool, error) {
-	if util.IsCPFValido(strconv.FormatInt(pessoa.CPF, 10)) {
-		return false, errors.New("CPF CNPJ não pode ser vazio!")
+	if !util.IsCPFValido(strconv.FormatInt(pessoa.CPF, 10)) {
+		return false, errors.New("CPF Invalido !")
 	}
 	return true, nil
 }
