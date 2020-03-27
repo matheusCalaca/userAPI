@@ -41,6 +41,14 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 		return false, errors.New("Sobrnome não pode ser vazio ! ")
 	}
 
+	if len(pessoa.Telefone) > 0 {
+		for _, telefone := range pessoa.Telefone {
+			if !util.IsTelefoneValido(telefone) {
+				return false, errors.New("Telefone Invalido ! ")
+			}
+		}
+	}
+
 	return true, nil
 }
 
