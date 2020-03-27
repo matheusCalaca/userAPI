@@ -79,13 +79,20 @@ func IsTelefoneValido(telefone models.Telefone) bool {
 		return false
 	}
 
+	sizeTelefone :=  len(telefone.Numero)
+	isSizeTelefoneValido :=  sizeTelefone == 9 || sizeTelefone == 8
+
+	if  !isSizeTelefoneValido {
+		fmt.Print("Tamanho do telefone Invalido ! ")
+		return false
+	}
+
 	return true
 }
 
 // ArrayContains verifica se contains o item no array
 func ArrayContains(arrayValue interface{}, itemComparacao interface{}) bool {
 	arr := reflect.ValueOf(arrayValue)
-	// fmt.Print(arr.Kind())
 	if arr.Kind() != reflect.Slice {
 		fmt.Print("Tipo de array invalido para a comparação !")
 		return false
