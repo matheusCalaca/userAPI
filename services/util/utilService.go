@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 	models "userAPI/models/user"
@@ -106,4 +107,13 @@ func ArrayContains(arrayValue interface{}, itemComparacao interface{}) bool {
 	}
 
 	return false
+}
+
+// IsEmailValido verifica se e um e-mail valido
+func IsEmailValido( email string) (bool){
+regexEmailValido := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+if regexEmailValido.MatchString(email){
+ return false
+}
+	return true
 }

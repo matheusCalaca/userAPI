@@ -44,15 +44,19 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 
 	if len(pessoa.Telefone) > 0 {
 		for _, telefone := range pessoa.Telefone {
-			isTelefoneValido, errorTelefone :=  util.IsTelefoneValido(telefone)
+			isTelefoneValido, errorTelefone := util.IsTelefoneValido(telefone)
 			if !isTelefoneValido {
 				return false, errorTelefone
 			}
 		}
 	}
 
-	if pessoa.DataNascimento.UnixNano() >= time.Now().AddDate(0, 0, 1).UnixNano(){
-return false, errors.New("Data de Nascimento invalida")
+	if pessoa.DataNascimento.UnixNano() >= time.Now().AddDate(0, 0, 1).UnixNano() {
+		return false, errors.New("Data de Nascimento invalida ! ")
+	}
+
+	if util.IsEmailValido(pessoa.Email) {
+		return false, errors.New("E-mail Invalido ! ")
 	}
 
 	return true, nil
