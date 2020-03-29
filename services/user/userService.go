@@ -59,6 +59,13 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 		return false, errors.New("E-mail Invalido ! ")
 	}
 
+	for _, endereco := range pessoa.Endereco {
+		isEnderecoValido, errorValidacaoEndereco := util.IsValidaEndereco(&endereco)
+		if !isEnderecoValido {
+			return false, errorValidacaoEndereco
+		}
+	}
+
 	return true, nil
 }
 
