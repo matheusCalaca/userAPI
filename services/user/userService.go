@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"time"
 	pessoaDAO "userAPI/dao/user"
 	models "userAPI/models/user"
 	util "userAPI/services/util"
@@ -43,10 +44,15 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 
 	if len(pessoa.Telefone) > 0 {
 		for _, telefone := range pessoa.Telefone {
-			if !util.IsTelefoneValido(telefone) {
-				return false, errors.New("Telefone Invalido ! ")
+			isTelefoneValido, errorTelefone :=  util.IsTelefoneValido(telefone)
+			if !isTelefoneValido {
+				return false, errorTelefone
 			}
 		}
+	}
+
+	if pessoa.DataNascimento.UnixNano() >= time.Now().AddDate(0, 0, 1).UnixNano(){
+return false, errors.New("Data de Nascimento invalida")
 	}
 
 	return true, nil

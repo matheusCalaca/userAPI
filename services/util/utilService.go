@@ -1,6 +1,7 @@
 package util
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 	"strconv"
@@ -71,23 +72,23 @@ func IsCPFValido(cpf string) bool {
 }
 
 // IsTelefoneValido verifica se e um telefone valido
-func IsTelefoneValido(telefone models.Telefone) bool {
+func IsTelefoneValido(telefone models.Telefone) (bool, error) {
 	ddds := []int{61, 62, 64, 65, 66, 67, 82, 71, 73, 74, 75, 77, 85, 88, 98, 99, 83, 81, 87, 86, 89, 84, 79, 68, 96, 92, 97, 91, 93, 94, 69, 95, 63, 27, 28, 31, 32, 33, 34, 35, 37, 38, 21, 22, 24, 11, 12, 13, 14, 15, 16, 17, 18, 19, 41, 42, 43, 44, 45, 46, 51, 53, 54, 55, 47, 48, 49}
 
 	if telefone.DDD == 0 || !ArrayContains(ddds, telefone.DDD) {
-		fmt.Print("DDD não existe na lista ! ")
-		return false
+		
+		return false, errors.New("DDD não existe na lista ! ")
 	}
 
 	sizeTelefone :=  len(telefone.Numero)
 	isSizeTelefoneValido :=  sizeTelefone == 9 || sizeTelefone == 8
 
 	if  !isSizeTelefoneValido {
-		fmt.Print("Tamanho do telefone Invalido ! ")
-		return false
+		
+		return false, errors.New("Tamanho do numero telefone Invalido ! ")
 	}
 
-	return true
+	return true, nil
 }
 
 // ArrayContains verifica se contains o item no array
