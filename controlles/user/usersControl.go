@@ -11,7 +11,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-const UserCollection = "user"
 
 var (
 	errNotExist        = errors.New("User não existe")
@@ -22,30 +21,18 @@ var (
 	errDeletionFailed  = errors.New("Erro ao Deletar usuario")
 )
 
-// var dbmap = dbControllers.InitDb()
-
-// func ListAllUser(c *gin.Context) {
-// 	users, err := userNegocio.FindAllUser()
-
-// 	if err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, &users)
-// }
-
+// CreatePessoa cria uma pessoa e retorna
 func CreatePessoa(c *gin.Context) {
-	var pessoaJson models.Pessoa
-	err := c.Bind(&pessoaJson)
+	// pessoaJSON objetos com os dadios de pessoa que recebe do Json
+	var pessoaJSON models.Pessoa
+
+	err := c.Bind(&pessoaJSON)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": errInvalidBody.Error()})
 		return
 	}
 
-	pessoaCreate, err := pessoaNegocio.InsertPessoa(pessoaJson, c.MustGet("db").(*gorm.DB))
-
-
+	pessoaCreate, err := pessoaNegocio.InsertPessoa(pessoaJSON, c.MustGet("db").(*gorm.DB))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})

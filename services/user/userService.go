@@ -69,6 +69,3 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 	return true, nil
 }
 
-// func FindAllUser() (userModel.Users, error) {
-// 	return userDao.SelectAllUser()
-// }
