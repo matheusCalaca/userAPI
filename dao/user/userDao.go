@@ -1,7 +1,7 @@
 package userdao
 
 import (
-	"log"
+	"fmt"
 	"strings"
 	models "userAPI/models/user"
 
@@ -12,7 +12,10 @@ import (
 func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 	caseUpperBeforeSave(&pessoa)
 	result := db.Create(&pessoa)
-	log.Print(&result.Error)
+	fmt.Print(&result.Error)
+	if result.Error != nil {
+		return pessoa, result.Error
+	}
 	return pessoa, nil
 
 }
