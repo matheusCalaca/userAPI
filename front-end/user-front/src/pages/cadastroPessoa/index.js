@@ -1,35 +1,32 @@
-import React, { useState }  from 'react';
+import React from 'react';
+import { Form, Scope } from '@unform/core';
+import Input from '../../components/form/Input';
+
+
+
 
 
 export default function CadastroPessoa() {
-    const [nome, setNome] = useState('');
-
-    function handleSubmit(event) {
-      event.preventDefault()
-      console.log('Nome: ' + nome);
-  
-      // values
-  
-  
+    function handleSubmit(data) {
+        console.log(data);
+        // { email: 'test@example.com', password: '123456' }
     }
-  
-  
-  
-
     return (
         <>
-            <h1>Cadastreo de Pessoa</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="nome">Nome:</label>
-                <input
-                    type="text"
-                    id="nome"
-                    placeholder="Digite seu Nome"
-                    value={nome}
-                    onChange={event => setNome(event.target.value)}
-                />
-                <button type="submit">Entrar</button>
-            </form>
+            <Form onSubmit={handleSubmit}>
+                <Input name="nome" type="text" />
+                <Input name="sebrenome" type="text" />
+                <Input name="CPF" type="text" />
+                <Input name="RG" type="text" />
+                <Input name="dataNascimento" type="date" />
+                <Input name="email" type="text" />
+                <Scope path="telefone[0]">
+                    <Input name="ddd" type="number"/>
+                    <Input name="numero" type="text" />
+                    <Input name="tipo" type="text" />
+                </Scope>
+                <button type="submit">Cadastrar</button>
+            </Form>
         </>
-    )
+    );
 }

@@ -43,3 +43,14 @@ table {
 }
 
 /* final reset css */
+
+.content-form{
+	display: flex;
+	flex-direction: column;
+}
+
+.filed-ddd{
+	width: 50px;
+	margin-right: 10px;
+}
+
