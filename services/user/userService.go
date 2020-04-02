@@ -2,7 +2,6 @@ package pessoanegocio
 
 import (
 	"errors"
-	"strconv"
 	"strings"
 	"time"
 	pessoaDAO "userAPI/dao/user"
@@ -30,7 +29,7 @@ func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 //validaPessoa metodos com as regras de validação antes de inserir uma pessoa
 func validaPessoa(pessoa *models.Pessoa) (bool, error) {
-	if !util.IsCPFValido(strconv.FormatInt(pessoa.CPF, 10)) {
+	if !util.IsCPFValido(pessoa.CPF) {
 		return false, errors.New("CPF Invalido ! ")
 	}
 
@@ -68,4 +67,3 @@ func validaPessoa(pessoa *models.Pessoa) (bool, error) {
 
 	return true, nil
 }
-
