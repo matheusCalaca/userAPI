@@ -10,7 +10,8 @@ class EnderecoForm extends Component {
     }
 
 
-    handlePlusEndereco = () => {
+    handlePlusEndereco = (event) => {
+        event.preventDefault(); 
         this.setState({
             enderecoContador: this.state.enderecoContador + 1
         })
