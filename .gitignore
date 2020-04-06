@@ -6,7 +6,7 @@
 
 
 # dependencies
-/front-end/user-front/node_modules
+/front-end/user-front/node_modules/*
 /front-end/user-front/node_modules/.bin
 /front-end/user-front/.pnp
 .pnp.js
@@ -27,3 +27,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules/*

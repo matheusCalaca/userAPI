@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	user "userAPI/controlles/user"
 	dbControler "userAPI/dao/db"
@@ -18,6 +19,7 @@ func StartGin() {
 		c.Set("db", db)
 		c.Next()
 	})
+	router.Use(CORSMiddleware())
 
 	api := router.Group("/api")
 	{
@@ -29,4 +31,22 @@ func StartGin() {
 		c.AbortWithStatus(http.StatusNotFound)
 	})
 	router.Run(":8000")
+}
+
+// CORSMiddleware remove o erro de CORS
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Print(" -------------- teste CORS ---------------------------")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
 }
