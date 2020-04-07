@@ -3,13 +3,30 @@ import React, { Component } from 'react';
 import EnderecoForm from '../../components/form/endereco-form';
 import Input from '../../components/form/Input';
 import PhoneForm from '../../components/form/phone-form';
+import Axios from 'axios';
+import { PessoaDto } from '../../models/pessoaDTO'
 
 
 
 
 class CadastroPessoa extends Component {
     handleSubmit = (data) => {
-        console.log(JSON.stringify(data));
+        var pessoa = new PessoaDto();
+        if (data != undefined) {
+            pessoa = JSON.parse(JSON.stringify(data));
+            pessoa.telefones.forEach(tel => { tel.ddd = parseInt(tel.ddd); });
+            pessoa.dataNascimento = new Date(pessoa.dataNascimento);
+            console.log(JSON.stringify(pessoa));
+        }
+        // Axios.post(`http://localhost:8000/api/users`, data).then(
+        //     (resp) => {
+        //         console.log(resp.data)
+        //     },
+        //     (err) => {
+        //         console.log(err)
+        //     }
+        // )
+        // console.log(JSON.stringify(data));
     }
 
     render() {
@@ -43,15 +60,11 @@ class CadastroPessoa extends Component {
                         </div>
                     </div>
 
-                    <div lassName="contentFornInsider">
-                        <div>
-                            <PhoneForm ></PhoneForm>
-                        </div>
+                    <div className="contentFornInsider">
+                        <PhoneForm ></PhoneForm>
                     </div>
-                    <div lassName="contentFornInsider">
-                        <div>
-                            <EnderecoForm></EnderecoForm>
-                        </div>
+                    <div className="contentFornInsider">
+                        <EnderecoForm></EnderecoForm>
                     </div>
                 </div>
                 <button type="submit">Cadastrar</button>
