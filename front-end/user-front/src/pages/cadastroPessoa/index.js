@@ -16,17 +16,25 @@ class CadastroPessoa extends Component {
             pessoa = JSON.parse(JSON.stringify(data));
             pessoa.telefones.forEach(tel => { tel.ddd = parseInt(tel.ddd); });
             pessoa.dataNascimento = new Date(pessoa.dataNascimento);
-            console.log(JSON.stringify(pessoa));
         }
-        // Axios.post(`http://localhost:8000/api/users`, data).then(
-        //     (resp) => {
-        //         console.log(resp.data)
-        //     },
-        //     (err) => {
-        //         console.log(err)
-        //     }
-        // )
-        // console.log(JSON.stringify(data));
+        const json = JSON.stringify(pessoa);
+        Axios.post(`http://localhost:8000/api/users`, json, {
+            headers: { "Content-Type": "application/json" }
+        }).then(
+            (resp) => {
+                console.log(resp.data)
+                alert('sucesso');
+            }
+
+        )
+            .catch(
+                (err) => {
+                    console.log("ERRO - " + JSON.stringify(err.response.data));
+                    console.log(err.response['data']);
+                    alert("ERRO - " + JSON.stringify(err.response.data));
+                }
+            )
+        console.log(JSON.stringify(pessoa));
     }
 
     render() {
