@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	user "userAPI/controlles/user"
 	dbControler "userAPI/dao/db"
@@ -9,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// StartGin funçao para inicia a aplicação pelo gin
 func StartGin() {
 	router := gin.Default()
 
@@ -23,7 +23,7 @@ func StartGin() {
 
 	api := router.Group("/api")
 	{
-		// api.GET("/users", user.ListAllUser)
+		api.GET("/users", user.ListarPessoas)
 		api.POST("/users", user.CreatePessoa)
 	}
 
@@ -36,7 +36,6 @@ func StartGin() {
 // CORSMiddleware remove o erro de CORS
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Print(" -------------- teste CORS ---------------------------")
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")

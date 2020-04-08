@@ -2,6 +2,8 @@ package pessoanegocio
 
 import (
 	"errors"
+	"fmt"
+
 	"strings"
 	"time"
 	pessoaDAO "userAPI/dao/user"
@@ -25,6 +27,18 @@ func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 	}
 
 	return pessoaDB, nil
+}
+
+// ListAllPessoa lista todas as pessoas do banco
+func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
+	pessoas, err := pessoaDAO.ListAllPessoa(db)
+	if err != nil {
+
+		return nil, err
+	}
+	fmt.Print(&pessoas)
+
+	return pessoas, nil
 }
 
 //validaPessoa metodos com as regras de validação antes de inserir uma pessoa

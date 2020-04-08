@@ -11,7 +11,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-
 var (
 	errNotExist        = errors.New("User não existe")
 	errInvalidID       = errors.New("ID Invalido")
@@ -39,5 +38,18 @@ func CreatePessoa(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "endereco": &pessoaCreate})
+	c.JSON(http.StatusCreated, gin.H{"status": "success", "endereco": &pessoaCreate})
+}
+
+// ListarPessoa lista todas as pessoas
+func ListarPessoas(c *gin.Context) {
+	pessoasFind, err := pessoaNegocio.ListAllPessoa(c.MustGet("db").(*gorm.DB))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, &pessoasFind)
+
 }

@@ -20,6 +20,17 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 }
 
+// ListAllPessoa lista todas as pessoas do banco de dados
+func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
+	var pessoas []models.Pessoa
+	result := db.Find(&pessoas)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &pessoas, nil
+}
+
 // caseUpperBeforeSave coloca em upper case al guns dados antes de salvar no banco
 func caseUpperBeforeSave(pessoa *models.Pessoa) {
 	for index, telefone := range pessoa.Telefone {
