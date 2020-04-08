@@ -10,6 +10,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+// InitDb inicia o banco de dados
 func InitDb() *gorm.DB {
 	var pessoa = &models.Pessoa{}
 	var telefone = &models.Telefone{}
@@ -24,6 +25,7 @@ func InitDb() *gorm.DB {
 	return dc
 }
 
+//CheckErr cheka se teve algun erro na execução do banco de dados
 func CheckErr(err error, msg string) error {
 	if err != nil {
 		log.Print(msg + " (" + err.Error() + ")")
@@ -31,10 +33,3 @@ func CheckErr(err error, msg string) error {
 	}
 	return nil
 }
-
-// func Cors() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		c.Writer.Header().Add("Access-Control-Allow-Origin", "*")
-// 		c.Next()
-// 	}
-// }

@@ -33,7 +33,6 @@ func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
 	pessoas, err := pessoaDAO.ListAllPessoa(db)
 	if err != nil {
-
 		return nil, err
 	}
 	fmt.Print(&pessoas)
