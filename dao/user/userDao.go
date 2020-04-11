@@ -23,21 +23,20 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 // ListAllPessoa lista todas as pessoas do banco de dados
 func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
-	
+
 	var pessoas []models.Pessoa
 	result := db.Find(&pessoas)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-
 	for index, pessoa := range pessoas {
 		var telefones []models.Telefone
 		var enderecos []models.Endereco
 
 		db.Find(&telefones, "TELEFONE_PESSOA = "+strconv.FormatUint(uint64(pessoa.ID), 16))
-		db.Find(&enderecos, "TELEFONE_PESSOA = "+strconv.FormatUint(uint64(pessoa.ID), 16))
-		
+		db.Find(&enderecos, "ENDERECO_PESSOA = "+strconv.FormatUint(uint64(pessoa.ID), 16))
+
 		pessoas[index].Telefone = telefones
 		pessoas[index].Endereco = enderecos
 
