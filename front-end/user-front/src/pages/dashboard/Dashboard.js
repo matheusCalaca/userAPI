@@ -23,7 +23,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
-import Orders from './Orders';
+// import Orders from './Orders';
+import ListaPessoa  from '../../pages/pessoa/listarPessoa'
 
 function Copyright() {
     return (
@@ -175,6 +176,13 @@ export default function Dashboard() {
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
+                        {/* Recent Orders */}
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                {/* <Orders /> */}
+                                <ListaPessoa />
+                            </Paper>
+                        </Grid>
                         {/* Chart */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
@@ -187,12 +195,7 @@ export default function Dashboard() {
                                 <Deposits />
                             </Paper>
                         </Grid>
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Orders />
-                            </Paper>
-                        </Grid>
+
                     </Grid>
                     <Box pt={4}>
                         <Copyright />
