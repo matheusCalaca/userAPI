@@ -6,10 +6,10 @@ export class  PessoaDto   {
      nome;
      sobrenome;
      RG;
-     dataNascimento = new Date;
+     dataNascimento = new Date();
      email;
-     telefones = [new TelefoneDTO];
-     enderecos = [new EnderecoDTO];
+     telefones = [new TelefoneDTO()];
+     enderecos = [new EnderecoDTO()];
 
 
 }

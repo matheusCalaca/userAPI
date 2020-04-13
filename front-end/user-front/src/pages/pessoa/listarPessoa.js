@@ -54,16 +54,16 @@ class ListaPessoa extends Component {
     }
 
     componentDidMount() {
-        this.teste();
+        this.returnListPessoas();
     }
-
-    teste = async () => Axios.get(`http://localhost:8000/api/users`).then(
+    //   returnListPessoas retorna as pessoa do servidor
+    returnListPessoas = async () => Axios.get(`http://localhost:8000/api/users`).then(
         resp => {
             this.state.rows = []
-            var pes = JSON.parse(JSON.stringify(resp.data));
-            for (let i = 0; i < pes.length; i++) {
-                const element = pes[i];
-                this.state.rows.push(createData(element['nome'], element['CPF'], element['email']));
+            var pesssoas = JSON.parse(JSON.stringify(resp.data));
+            for (let i = 0; i < pesssoas.length; i++) {
+                const pessoa = pesssoas[i];
+                this.state.rows.push(createData(pessoa['nome'], pessoa['CPF'], pessoa['email']));
             }
             this.setState({ test: this.state.rows })
         }
@@ -78,7 +78,6 @@ class ListaPessoa extends Component {
 
         return (
             <Paper className={this.state.classes.root}>
-                {/* {this.state.test.map((t) => (<h1 key={t.CPF}>{t.CPF}</h1>))} */}
                 <TableContainer className={this.state.classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
