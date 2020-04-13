@@ -24,7 +24,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 // import Orders from './Orders';
-import ListaPessoa  from '../../pages/pessoa/listarPessoa'
+import ListaPessoa from '../../pages/pessoa/listarPessoa'
 
 function Copyright() {
     return (
@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaperClose: {
         overflowX: 'hidden',
+        position: 'fixed',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -122,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -156,7 +157,7 @@ export default function Dashboard() {
                 </Toolbar>
             </AppBar>
             <Drawer
-                variant="permanent"
+                variant="persistent"
                 classes={{
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
@@ -184,17 +185,17 @@ export default function Dashboard() {
                             </Paper>
                         </Grid>
                         {/* Chart */}
-                        <Grid item xs={12} md={8} lg={9}>
+                        {/* <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>
                                 <Chart />
                             </Paper>
-                        </Grid>
+                        </Grid> */}
                         {/* Recent Deposits */}
-                        <Grid item xs={12} md={4} lg={3}>
+                        {/* <Grid item xs={12} md={4} lg={3}>
                             <Paper className={fixedHeightPaper}>
                                 <Deposits />
                             </Paper>
-                        </Grid>
+                        </Grid> */}
 
                     </Grid>
                     <Box pt={4}>
