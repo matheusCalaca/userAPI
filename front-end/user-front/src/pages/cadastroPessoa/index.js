@@ -12,7 +12,7 @@ import { PessoaDto } from '../../models/pessoaDTO'
 class CadastroPessoa extends Component {
     handleSubmit = (data) => {
         var pessoa = new PessoaDto();
-        if (data != undefined) {
+        if (data !== undefined) {
             pessoa = JSON.parse(JSON.stringify(data));
             pessoa.telefones.forEach(tel => { tel.ddd = parseInt(tel.ddd); });
             pessoa.dataNascimento = new Date(pessoa.dataNascimento);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, TableRow, TablePagination, TableHead, Table, TableBody, TableCell, TableContainer } from '@material-ui/core';
-import ReactDOM from 'react-dom';
+import Axios from 'axios';
 
 
 const columns = [
@@ -19,11 +19,6 @@ function createData(nome, CPF, email) {
     return { nome, CPF, email };
 }
 
-const rows = [
-    createData('Matheus', '753.557.951-53', 'matheusfcalaca@gmail.com'),
-    createData('Matheus 2', '753.557.951-53', 'matheusfcalaca2@gmail.com'),
-];
-
 const useStyles = makeStyles({
     root: {
         width: '100%',
@@ -37,29 +32,53 @@ const useStyles = makeStyles({
 
 class ListaPessoa extends Component {
 
-    //   const handleChangePage = (event, newPage) => {
-    //     setPage(newPage);
-    //   };
+    handleChangePage = (event, newPage) => {
+        this.state.page = newPage;
+    };
 
-    //   const handleChangeRowsPerPage = (event) => {
-    //     setRowsPerPage(+event.target.value);
-    //     setPage(0);
-    //   };
+    handleChangeRowsPerPage = (event) => {
+        this.state.rowsPerPage += event.target.value;
+        this.state.page = 0;
+    };
     constructor(props) {
         super(props);
+
         this.state = {
             classes: useStyles,
             page: 0,
-            setPage:0,
-            rowsPerPage:10,
-            setRowsPerPage:10
-          };
+            rows: [],
+            setPage: 0,
+            rowsPerPage: 10,
+            setRowsPerPage: 10
+        };
     }
+
+    componentDidMount() {
+        this.teste();
+    }
+
+    teste = async () => Axios.get(`http://localhost:8000/api/users`).then(
+        resp => {
+            this.state.rows = []
+            var pes = JSON.parse(JSON.stringify(resp.data));
+            for (let i = 0; i < pes.length; i++) {
+                const element = pes[i];
+                this.state.rows.push(createData(element['nome'], element['CPF'], element['email']));
+            }
+            this.setState({ test: this.state.rows })
+        }
+    ).catch(
+        err => {
+            console.log("ERRO - " + JSON.stringify(err));
+            console.log(err);
+        }
+    );
 
     render() {
 
         return (
             <Paper className={this.state.classes.root}>
+                {/* {this.state.test.map((t) => (<h1 key={t.CPF}>{t.CPF}</h1>))} */}
                 <TableContainer className={this.state.classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -76,9 +95,9 @@ class ListaPessoa extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row) => {
+                            {this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.CPF}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
@@ -94,13 +113,13 @@ class ListaPessoa extends Component {
                     </Table>
                 </TableContainer>
                 <TablePagination
-                    // rowsPerPageOptions={[10, 25, 100]}
+                    rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                // count={rows.length}
-                // rowsPerPage={rowsPerPage}
-                // page={page}
-                // onChangePage={handleChangePage}
-                // onChangeRowsPerPage={handleChangeRowsPerPage}
+                    count={this.state.rows.length}
+                    rowsPerPage={this.state.rowsPerPage}
+                    page={this.state.page}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
             </Paper>
         );
