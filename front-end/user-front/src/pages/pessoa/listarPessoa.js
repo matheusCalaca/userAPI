@@ -28,8 +28,6 @@ const useStyles = makeStyles({
     },
 });
 
-
-
 class ListaPessoa extends Component {
 
     handleChangePage = (event, newPage) => {
