@@ -21,6 +21,22 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 }
 
+// DeletarPessoaID Deleta pessoa do banco de dados
+func DeletarPessoaID(cpf string, db *gorm.DB) (string, error) {
+
+	var pessoa models.Pessoa
+
+	db.Where("CPF = ?", cpf).Find(&pessoa)
+
+	result := db.Delete(pessoa)
+	fmt.Print(&result.Error)
+	if result.Error != nil {
+		return "", result.Error
+	}
+	return "Sucesso ao deletar pessoa: " + cpf, nil
+
+}
+
 // ListAllPessoa lista todas as pessoas do banco de dados
 func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
 

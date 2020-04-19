@@ -41,7 +41,7 @@ func CreatePessoa(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"status": "success", "endereco": &pessoaCreate})
 }
 
-// ListarPessoa lista todas as pessoas
+// ListarPessoas lista todas as pessoas
 func ListarPessoas(c *gin.Context) {
 	pessoasFind, err := pessoaNegocio.ListAllPessoa(c.MustGet("db").(*gorm.DB))
 
@@ -51,5 +51,20 @@ func ListarPessoas(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, &pessoasFind)
+
+}
+
+// DeletarPessoa deleta pessoa por ID
+func DeletarPessoa(c *gin.Context) {
+
+	cpf := c.Param("cpf")
+	msg, err := pessoaNegocio.DeletarPessoaID(cpf, c.MustGet("db").(*gorm.DB))
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, &msg)
 
 }

@@ -25,6 +25,7 @@ func StartGin() {
 	{
 		api.GET("/users", user.ListarPessoas)
 		api.POST("/users", user.CreatePessoa)
+		api.DELETE("/users/:cpf", user.DeletarPessoa)
 	}
 
 	router.NoRoute(func(c *gin.Context) {

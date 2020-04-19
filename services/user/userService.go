@@ -39,6 +39,15 @@ func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
 
 	return pessoas, nil
 }
+// DeletarPessoaID Deletar Pessoa por ID
+func DeletarPessoaID(cpf string, db *gorm.DB) (string, error) {
+	msg, err := pessoaDAO.DeletarPessoaID(cpf, db)
+	if err != nil {
+		return "", err
+	}
+	fmt.Print(&msg)
+	return msg, nil
+}
 
 //validaPessoa metodos com as regras de validação antes de inserir uma pessoa
 func validaPessoa(pessoa *models.Pessoa) (bool, error) {
