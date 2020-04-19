@@ -30,13 +30,20 @@ const useStyles = makeStyles({
 
 class ListaPessoa extends Component {
 
+    // handleChangePage = (event, newPage) => {
+    //     this.state.page = newPage;
+    // };
+
+    // handleChangeRowsPerPage = (event) => {
+    //     this.state.rowsPerPage += event.target.value;
+    //     this.state.page = 0;
+    // };
     handleChangePage = (event, newPage) => {
-        this.state.page = newPage;
+        console.log('change');
     };
 
     handleChangeRowsPerPage = (event) => {
-        this.state.rowsPerPage += event.target.value;
-        this.state.page = 0;
+      console.log('row');
     };
     constructor(props) {
         super(props);
