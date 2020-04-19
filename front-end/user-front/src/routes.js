@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import CadastroPessoa from './pages/cadastroPessoa';
 import listarPessoa from './pages/pessoa/listarPessoa';

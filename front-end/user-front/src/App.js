@@ -5,7 +5,6 @@ import clsx from 'clsx';
 import {
     AppBar
     , Toolbar
-    , List
     , Typography
     , Divider
     , IconButton
