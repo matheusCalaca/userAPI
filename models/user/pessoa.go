@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 // Pessoa o objeto que representa a pessoa
+// @Pessoa
 type Pessoa struct {
 	gorm.Model
 	CPF            string      `gorm:"column:CPF;UNIQUE" json:"CPF"`

@@ -6,10 +6,34 @@ import (
 	dbControler "userAPI/dao/db"
 
 	"github.com/gin-gonic/gin"
+
+	"userAPI/docs"
+
+	swaggerFiles "github.com/swaggo/files"
+
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // StartGin funçao para inicia a aplicação pelo gin
+// @title Swagger Example API
+// @version 1.0
+// @description api para cadastro de pessoa
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email matheusfcalaca@gmail.com
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @BasePath /v2
 func StartGin() {
+
+	docs.SwaggerInfo.Title = "User API"
+	docs.SwaggerInfo.Description = "api para cadastro de pessoa"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:8000"
+	docs.SwaggerInfo.BasePath = "/api"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+
 	router := gin.Default()
 
 	// connnection database
@@ -27,10 +51,13 @@ func StartGin() {
 		api.POST("/users", user.CreatePessoa)
 		api.DELETE("/users/:cpf", user.DeletarPessoa)
 	}
+	// use ginSwagger middleware to
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.NoRoute(func(c *gin.Context) {
 		c.AbortWithStatus(http.StatusNotFound)
 	})
+
 	router.Run(":8000")
 }
 
