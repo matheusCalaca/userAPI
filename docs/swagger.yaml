@@ -105,4 +105,13 @@ paths:
           description: ok
           schema:
             type: string
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: CPF para fazer a busca da pessoa
+        in: path
+        name: cpf
+        required: true
+        type: string
 swagger: "2.0"

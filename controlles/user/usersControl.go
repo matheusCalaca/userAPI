@@ -65,6 +65,21 @@ func ListarPessoas(c *gin.Context) {
 
 }
 
+// BuscaPessoaCpf busca a pessoa pelo CPF informado
+// @Accept json
+// @Poduce json
+// @Param cpf path string true "CPF para fazer a busca da pessoa"
+// @Suscesso 200 {object} model.Pessoa
+// @Router /users/{cpf} [get]
+func BuscaPessoaCpf(c *gin.Context) {
+	cpf := c.Param("cpf")
+	pessoa, err := pessoaNegocio.BuscaPessoa(cpf, c.MustGet("db").(*gorm.DB))
+	TratarErro(err, c)
+
+	c.JSON(http.StatusOK, &pessoa)
+
+}
+
 // DeletarPessoa deleta pessoa por ID
 // ListAccounts godoc
 // @Accept  json
@@ -75,7 +90,7 @@ func ListarPessoas(c *gin.Context) {
 func DeletarPessoa(c *gin.Context) {
 
 	cpf := c.Param("cpf")
-	msg, err := pessoaNegocio.DeletarPessoaID(cpf, c.MustGet("db").(*gorm.DB))
+	msg, err := pessoaNegocio.DeletarPessoaCpf(cpf, c.MustGet("db").(*gorm.DB))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
@@ -84,4 +99,13 @@ func DeletarPessoa(c *gin.Context) {
 
 	c.JSON(http.StatusOK, &msg)
 
+}
+
+// TratarErro trato o erro para não obter retorno
+// todo: mover para um metodo de uteis
+func TratarErro(err error, c *gin.Context) {
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "failed", "message": err.Error()})
+		return
+	}
 }

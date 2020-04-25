@@ -21,6 +21,10 @@ func InsertPessoa(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 		return pessoa, errValidation
 	}
 
+	//TODO: verifica se pessoa ja existe
+	
+
+
 	pessoaDB, err := pessoaDAO.InserirPessoaBD(pessoa, db)
 	if err != nil {
 		return pessoa, err
@@ -39,9 +43,22 @@ func ListAllPessoa(db *gorm.DB) (*[]models.Pessoa, error) {
 
 	return pessoas, nil
 }
-// DeletarPessoaID Deletar Pessoa por ID
-func DeletarPessoaID(cpf string, db *gorm.DB) (string, error) {
-	msg, err := pessoaDAO.DeletarPessoaID(cpf, db)
+
+
+// BuscaPessoa busca uma pessoa pelo cpf
+func BuscaPessoa(cpf string, db *gorm.DB) (*models.Pessoa, error) {
+	pessoas, err := pessoaDAO.BuscaPessoa(cpf , db)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Print(&pessoas)
+
+	return &pessoas, nil
+}
+
+// DeletarPessoaCpf Deletar Pessoa por ID
+func DeletarPessoaCpf(cpf string, db *gorm.DB) (string, error) {
+	msg, err := pessoaDAO.DeletarPessoaCpf(cpf, db)
 	if err != nil {
 		return "", err
 	}

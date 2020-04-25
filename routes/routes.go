@@ -48,6 +48,7 @@ func StartGin() {
 	api := router.Group("/api")
 	{
 		api.GET("/users", user.ListarPessoas)
+		api.GET("/users/:cpf", user.BuscaPessoaCpf)
 		api.POST("/users", user.CreatePessoa)
 		api.DELETE("/users/:cpf", user.DeletarPessoa)
 	}

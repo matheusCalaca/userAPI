@@ -1,6 +1,7 @@
 package userdao
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -21,12 +22,14 @@ func InserirPessoaBD(pessoa models.Pessoa, db *gorm.DB) (models.Pessoa, error) {
 
 }
 
-// DeletarPessoaID Deleta pessoa do banco de dados
-func DeletarPessoaID(cpf string, db *gorm.DB) (string, error) {
+// DeletarPessoaCpf Deleta pessoa do banco de dados
+func DeletarPessoaCpf(cpf string, db *gorm.DB) (string, error) {
 
-	var pessoa models.Pessoa
-
-	db.Where("CPF = ?", cpf).Find(&pessoa)
+	pessoa, err := BuscaPessoa(cpf, db)
+	
+	if err != nil {
+		return "", errors.New("Erro ao localizar pessoa" + err.Error())
+	}
 
 	result := db.Delete(pessoa)
 	fmt.Print(&result.Error)
@@ -34,6 +37,14 @@ func DeletarPessoaID(cpf string, db *gorm.DB) (string, error) {
 		return "", result.Error
 	}
 	return "Sucesso ao deletar pessoa: " + cpf, nil
+
+}
+// BuscaPessoa a pessoa pelo CPF
+func BuscaPessoa(cpf string, db *gorm.DB) (models.Pessoa, error) {
+	var pessoa models.Pessoa
+	result := db.Where("CPF = ?", cpf).Find(&pessoa)
+
+	return pessoa, result.Error
 
 }
 
